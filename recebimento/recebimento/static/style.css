@@ -1,0 +1,53 @@
+:root{--papel:#edf0f3;--tinta:#16212e;--suave:#5b6877;--linha:#cbd3dc;--sinal:#f2a900;--ok:#1e7b4f;--erro:#b3261e;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--papel);color:var(--tinta);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1100px;margin:0 auto;padding:1rem}
+h1{font-size:1.6rem;margin:.2rem 0}
+a{color:inherit}
+.topo{background:var(--tinta);border-bottom:4px solid var(--sinal);display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem;padding:.6rem 1rem}
+.marca{color:#fff;font-weight:800;font-size:1.3rem;text-decoration:none;letter-spacing:.02em}
+.topo nav{display:flex;flex-wrap:wrap;gap:.25rem 1rem;align-items:center}
+.topo nav a{color:#d6dde5;text-decoration:none;padding:.35rem 0}
+.topo nav a:hover{color:#fff}
+.topo nav a.destaque{background:var(--sinal);color:var(--tinta);font-weight:700;padding:.35rem .8rem;border-radius:6px}
+.topo nav a.sair{margin-left:auto;font-size:.9rem}
+.barra{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.75rem;margin-bottom:.5rem}
+.busca{display:flex;gap:.5rem}
+.resumo{color:var(--suave);margin:.25rem 0 1rem}
+.alerta{color:var(--erro)}
+.vazio{background:var(--card);border:2px dashed var(--linha);border-radius:10px;padding:1.5rem;text-align:center}
+input,select,textarea{width:100%;font:inherit;padding:.6rem .7rem;border:1px solid var(--linha);border-radius:6px;background:#fff;color:var(--tinta)}
+input:focus-visible,select:focus-visible,textarea:focus-visible,.botao:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--sinal);outline-offset:2px}
+label{display:block;font-weight:600;margin-bottom:.9rem}
+label input,label select,label textarea{margin-top:.3rem;font-weight:400}
+.botao{display:inline-block;background:var(--tinta);color:#fff;border:0;border-radius:6px;padding:.6rem 1.1rem;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;text-align:center}
+.botao.claro{background:#fff;color:var(--tinta);border:1px solid var(--tinta)}
+.link{background:none;border:0;color:var(--tinta);text-decoration:underline;cursor:pointer;font:inherit;padding:.3rem}
+.caixa{background:var(--card);border:1px solid var(--linha);border-radius:12px;padding:1.25rem;max-width:640px;margin:1rem auto}
+.caixa.estreita{max-width:380px;margin-top:12vh}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:0 .8rem}
+.aviso{padding:.7rem 1rem;border-radius:6px;border-left:6px solid;background:#fff;margin:.5rem 0}
+.aviso.ok{border-color:var(--ok)} .aviso.erro{border-color:var(--erro)} .aviso.aviso{border-color:var(--sinal);background:#fff7e0}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1rem}
+.produto{background:var(--card);border:1px solid var(--linha);border-radius:12px;overflow:hidden;border-top:5px solid var(--ok)}
+.produto.baixo{border-top-color:var(--erro)}
+.produto img,.semfoto{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:#dfe5ea}
+.semfoto{display:grid;place-items:center;font-size:3rem;font-weight:800;color:var(--suave)}
+.info{padding:.8rem 1rem 1rem}
+.info h2{font-size:1.05rem;margin:0}
+.sku{color:var(--suave);margin:0;font-size:.85rem}
+.saldo{font-size:2.4rem;font-weight:800;margin:.3rem 0;font-variant-numeric:tabular-nums;line-height:1.1}
+.saldo small{font-size:.8rem;font-weight:400;color:var(--suave)}
+.produto.baixo .saldo{color:var(--erro)}
+.acoes{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem .6rem}
+.filtros{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.5rem;margin-bottom:1rem}
+.rolagem{overflow-x:auto;background:var(--card);border:1px solid var(--linha);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:.55rem .7rem;border-bottom:1px solid var(--linha);vertical-align:top}
+th{background:#f5f7f9;white-space:nowrap}
+small{color:var(--suave)}
+.num{font-weight:700;font-variant-numeric:tabular-nums;color:var(--ok)} .num.neg{color:var(--erro)}
+.selo{background:#fff1c7;border:1px solid var(--sinal);border-radius:4px;padding:0 .35rem;font-size:.78rem;font-weight:600;color:var(--tinta)}
+tr.estornada td{opacity:.5;text-decoration:line-through}
+tr.estornada td:last-child{text-decoration:none}
+@media (max-width:520px){.duas{grid-template-columns:1fr}.topo nav a.sair{margin-left:0}}

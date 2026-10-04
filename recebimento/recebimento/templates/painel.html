@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block titulo %}Estoque{% endblock %}
+{% block conteudo %}
+<div class="barra">
+  <h1>Estoque</h1>
+  <form method="get" class="busca">
+    <input name="q" value="{{ q }}" placeholder="Buscar por nome ou SKU" aria-label="Buscar produto">
+    <button class="botao claro">Buscar</button>
+  </form>
+</div>
+<p class="resumo">{{ produtos|length }} produtos
+  {% if baixos %}· <strong class="alerta">{{ baixos }} no mínimo ou abaixo</strong>{% endif %}</p>
+
+{% if not produtos %}
+  <p class="vazio">Nenhum produto ainda. <a href="{{ url_for('produto_form') }}">Cadastre o primeiro produto</a> para começar a receber cargas.</p>
+{% endif %}
+<div class="grade">
+{% for p in produtos %}
+  <article class="produto {{ 'baixo' if p.saldo <= p.estoque_minimo }}">
+    {% if p.foto %}<img src="{{ url_for('static', filename='uploads/' ~ p.foto) }}" alt="{{ p.nome }}" loading="lazy">
+    {% else %}<div class="semfoto" aria-hidden="true">{{ p.nome[:1] }}</div>{% endif %}
+    <div class="info">
+      <h2>{{ p.nome }}</h2>
+      <p class="sku">{{ p.sku }}</p>
+      <p class="saldo">{{ p.saldo }}<small> un · mínimo {{ p.estoque_minimo }}</small></p>
+      <div class="acoes">
+        <a class="botao" href="{{ url_for('movimentar', produto=p.id) }}">Receber</a>
+        <a class="link" href="{{ url_for('historico', produto=p.id) }}">Histórico</a>
+        <a class="link" href="{{ url_for('produto_form', pid=p.id) }}">Editar</a>
+      </div>
+    </div>
+  </article>
+{% endfor %}
+</div>
+{% endblock %}

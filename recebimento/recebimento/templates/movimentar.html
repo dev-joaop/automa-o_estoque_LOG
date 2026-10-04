@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block titulo %}Receber{% endblock %}
+{% block conteudo %}
+<form method="post" class="caixa">
+  <h1>Registrar movimentação</h1>
+  <label>Produto
+    <select name="produto_id" required>
+      <option value="">Escolha um produto</option>
+      {% for p in produtos %}<option value="{{ p.id }}" {{ 'selected' if p.id == selecionado }}>{{ p.nome }} ({{ p.sku }})</option>{% endfor %}
+    </select>
+  </label>
+  <label>Tipo
+    <select name="tipo" id="tipo">
+      <option value="entrada">Entrada (recebimento)</option>
+      <option value="saida">Saída</option>
+      <option value="ajuste">Ajuste de inventário (use negativo para reduzir)</option>
+    </select>
+  </label>
+  <div class="duas">
+    <label>Quantidade recebida <input name="quantidade" type="number" required inputmode="numeric"></label>
+    <label id="esp">Esperado na nota fiscal <input name="esperado" type="number" min="0" inputmode="numeric"></label>
+  </div>
+  <div class="duas">
+    <label>Nota fiscal <input name="nota_fiscal"></label>
+    <label>Fornecedor <input name="fornecedor"></label>
+  </div>
+  <div class="duas">
+    <label>Lote <input name="lote"></label>
+    <label>Validade <input name="validade" type="date"></label>
+  </div>
+  <label>Observação (avaria, falta, etc.) <textarea name="observacao" rows="2"></textarea></label>
+  <button class="botao">Registrar</button>
+</form>
+<script>
+  // Só entradas têm "esperado na nota fiscal"; nos outros tipos o campo some.
+  const tipo = document.getElementById('tipo'), esp = document.getElementById('esp');
+  const atualizar = () => esp.style.display = tipo.value === 'entrada' ? '' : 'none';
+  tipo.addEventListener('change', atualizar); atualizar();
+</script>
+{% endblock %}

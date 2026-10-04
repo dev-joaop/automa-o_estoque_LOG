@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block titulo %}Produto{% endblock %}
+{% block conteudo %}
+<form method="post" enctype="multipart/form-data" class="caixa">
+  <h1>{{ 'Editar produto' if p else 'Novo produto' }}</h1>
+  <label>Código (SKU) <input name="sku" required value="{{ p.sku if p }}"></label>
+  <label>Nome <input name="nome" required value="{{ p.nome if p }}"></label>
+  <label>Estoque mínimo <input name="estoque_minimo" type="number" min="0" value="{{ p.estoque_minimo if p else 0 }}"></label>
+  <label>Foto (JPG, PNG ou WebP, até 5 MB) <input name="foto" type="file" accept="image/*" capture="environment"></label>
+  <button class="botao">Salvar produto</button>
+</form>
+{% endblock %}

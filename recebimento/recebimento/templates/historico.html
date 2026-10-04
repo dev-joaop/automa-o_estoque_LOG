@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block titulo %}Histórico{% endblock %}
+{% block conteudo %}
+<div class="barra"><h1>Histórico</h1>
+  <a class="botao claro" href="{{ url_for('exportar', **f) }}">Baixar Excel</a></div>
+<form method="get" class="filtros">
+  <select name="produto" aria-label="Produto"><option value="">Todos os produtos</option>
+    {% for p in produtos %}<option value="{{ p.id }}" {{ 'selected' if f.produto == p.id|string }}>{{ p.nome }}</option>{% endfor %}</select>
+  <select name="tipo" aria-label="Tipo"><option value="">Todos os tipos</option>
+    {% for t in ('entrada','saida','ajuste') %}<option {{ 'selected' if f.tipo == t }}>{{ t }}</option>{% endfor %}</select>
+  <input type="date" name="de" value="{{ f.de }}" aria-label="De">
+  <input type="date" name="ate" value="{{ f.ate }}" aria-label="Até">
+  <input name="nf" value="{{ f.nf }}" placeholder="Nota fiscal" aria-label="Nota fiscal">
+  <button class="botao">Filtrar</button>
+</form>
+{% if not movs %}<p class="vazio">Nenhuma movimentação encontrada com esses filtros.</p>{% else %}
+<div class="rolagem"><table>
+  <thead><tr><th>#</th><th>Data</th><th>Produto</th><th>Tipo</th><th>Qtd</th><th>NF / Fornecedor</th><th>Lote / Validade</th><th>Obs.</th><th>Usuário</th><th></th></tr></thead>
+  <tbody>
+  {% for m in movs %}
+  <tr class="{{ 'estornada' if m.estornada }}">
+    <td>{{ m.id }}</td><td>{{ m.criado_em|br }}</td><td>{{ m.produto }}<br><small>{{ m.sku }}</small></td>
+    <td>{{ m.tipo }}</td>
+    <td class="num {{ 'neg' if m.quantidade < 0 }}">{{ '%+d' % m.quantidade }}
+      {% if m.esperado is not none and m.esperado != m.quantidade %}<br><span class="selo">esperado {{ m.esperado }}</span>{% endif %}</td>
+    <td>{{ m.nota_fiscal or '' }}<br><small>{{ m.fornecedor or '' }}</small></td>
+    <td>{{ m.lote or '' }}<br><small>{{ m.validade or '' }}</small></td>
+    <td>{{ m.observacao or '' }}</td><td>{{ m.usuario }}</td>
+    <td>{% if m.estornada %}<small>estornado</small>
+        {% elif not m.estorno_de %}<form method="post" action="{{ url_for('estornar', mid=m.id) }}" onsubmit="return confirm('Estornar o lançamento #{{ m.id }}?')"><button class="link">Estornar</button></form>{% endif %}</td>
+  </tr>
+  {% endfor %}
+  </tbody></table></div>
+<p class="resumo">Mostrando os 300 lançamentos mais recentes. O Excel baixado traz todos os que passam pelo filtro.</p>
+{% endif %}
+{% endblock %}

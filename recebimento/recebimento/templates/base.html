@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block titulo %}Recebimento{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if session.uid %}
+<header class="topo">
+  <a class="marca" href="{{ url_for('painel') }}">Doca</a>
+  <nav>
+    <a href="{{ url_for('painel') }}">Estoque</a>
+    <a href="{{ url_for('movimentar') }}" class="destaque">Receber</a>
+    <a href="{{ url_for('historico') }}">Histórico</a>
+    <a href="{{ url_for('produto_form') }}">Novo produto</a>
+    <a href="{{ url_for('sair') }}" class="sair">Sair ({{ session.nome }})</a>
+  </nav>
+</header>
+{% endif %}
+<main>
+  {% for cat, msg in get_flashed_messages(with_categories=true) %}
+    <p class="aviso {{ cat }}" role="status">{{ msg }}</p>
+  {% endfor %}
+  {% block conteudo %}{% endblock %}
+</main>
+</body>
+</html>
